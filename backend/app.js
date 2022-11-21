@@ -4,6 +4,7 @@ const BodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const routes = require('./routes/routes');
 const cenralErrors = require('./middlewares/central-error');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 const PORT = 3000;
@@ -19,7 +20,10 @@ async function main() {
 }
 app.use(BodyParser.json());
 app.use(express.json());
+app.use(requestLogger); // подключаем логгер запросов
 app.use(routes);
+
+app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors());
 app.use(cenralErrors);
