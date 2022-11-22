@@ -70,7 +70,7 @@ class Api {
 }
 // API
 export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46',
+  baseUrl: 'https://flipster99964.students.nomoredomains.club',
   headers: {
     authorization: 'fca34032-ff7c-4199-a459-318687c2ade6',
     'Content-Type': 'application/json'
