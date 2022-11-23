@@ -1,4 +1,4 @@
-const BASE_URL = 'https://auth.nomoreparties.co';
+const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
 
 export function register({email, password}) {
   const url = `${BASE_URL}/signup`;
