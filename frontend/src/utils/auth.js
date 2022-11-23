@@ -1,69 +1,61 @@
-const baseUrl = 'https://api.flipster99964.student.nomoredomains.club';
+const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
 
-class Auth {
-  constructor(baseUrl) {
-    this._baseUrl = baseUrl;
-  }
-
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(res.json());
-    }
-  }
-
-  register({email, password}) {
-    return fetch(`${this._baseUrl}/signup`, {
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "password": password,
-        "email": email
-      }),
-    }).then(this._checkResponse);
-  }
-
-  login({email, password}) {
-    return fetch(`${this._baseUrl}/signin`, {
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "password": password,
-        "email": email
-      }),
-    }).then(this._checkResponse);
-  }
-
-  logout(email) {
-    return fetch(`${this._baseUrl}/logout`, {
-      method: "DELETE",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "email": email
-      }),
-    }).then(this._checkResponse);
-  }
-
-  checkToken() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(this._checkResponse);
-  }
+export function register({email, password}) {
+  const url = `${BASE_URL}/signup`;
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({email, password}),
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+      // Получить сообщение об ошибке с сервера
+      return res.json().then((res) => {
+        throw new Error(res.message);
+      });
+    });
 }
 
-const auth = new Auth(baseUrl);
-export default auth;
+export function authorize({email, password}) {
+  const url = `${BASE_URL}/signin`;
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({email, password}),
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+      // Получить сообщение об ошибке с сервера
+      return res.json().then((res) => {
+        throw new Error(res.message);
+      });
+    })
+    .then(res => {
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+      }
+      return res;
+    });
+}
+
+export function checkToken(token) {
+  const url = `${BASE_URL}/users/me`;
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization" : `Bearer ${token}`
+    },
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+      // Получить сообщение об ошибке с сервера
+      return res.json().then((res) => {
+        throw new Error(res.message);
+      });
+    });
+}
