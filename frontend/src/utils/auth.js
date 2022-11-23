@@ -1,12 +1,11 @@
 const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
 
-
 export function register({email, password}) {
   const url = `${BASE_URL}/signup`;
   return fetch(url, {
     method: 'POST',
-    credentials: 'include',
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({email, password}),
@@ -24,8 +23,8 @@ export function authorize({email, password}) {
   const url = `${BASE_URL}/signin`;
   return fetch(url, {
     method: 'POST',
-    credentials: 'include',
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({email, password}),
@@ -45,13 +44,13 @@ export function authorize({email, password}) {
     });
 }
 
-export function checkToken() {
-  const url = `${BASE_URL}/users/me`;
-  return fetch(url, {
+export function checkToken(token) {
+  return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
-    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
     },
   })
     .then(res => {
