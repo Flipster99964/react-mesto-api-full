@@ -3,7 +3,6 @@ const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 const userRouter = require('./users');
 const cardRouter = require('./card');
-const corsCheck = require('../middlewares/cors');
 const NotFoundError = require('../errors/not-found-error');
 const {
   createUser,
@@ -13,7 +12,6 @@ const { AVATAR_REGEX } = require('../constants');
 const auth = require('../middlewares/auth');
 
 const app = express();
-app.use(corsCheck);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
