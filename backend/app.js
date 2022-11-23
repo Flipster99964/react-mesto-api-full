@@ -19,9 +19,9 @@ async function main() {
     console.log(`App listening on port ${PORT}`);
   });
 }
-app.use(corsCheck);
 app.use(BodyParser.json());
 app.use(express.json());
+app.use(corsCheck);
 app.use(requestLogger); // подключаем логгер запросов
 app.use(routes);
 
