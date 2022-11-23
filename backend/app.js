@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const routes = require('./routes/routes');
@@ -22,6 +23,8 @@ async function main() {
 }
 app.use(corsCheck);
 app.use(BodyParser.json());
+app.use(BodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(requestLogger); // подключаем логгер запросов
 app.use(routes);
