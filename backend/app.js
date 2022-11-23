@@ -21,15 +21,14 @@ async function main() {
     console.log(`App listening on port ${PORT}`);
   });
 }
-app.use(corsCheck);
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(requestLogger); // подключаем логгер запросов
-app.use(routes);
-
 app.use(helmet());
+app.use(corsCheck);
+app.use(routes);
 
 app.use(errorLogger); // подключаем логгер ошибок
 
