@@ -1,6 +1,6 @@
 const corsOptions = {
   origin: [
-    'https://flipster99964.students.nomoredomains.club/',
+    'https://flipster99964.students.nomoredomains.club',
   ],
   credentials: true,
 };
