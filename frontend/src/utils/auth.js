@@ -1,49 +1,63 @@
 const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
 
-function checkResponse(res) {
-  if (res.ok) {
-    return res.json()
-  }
-  return Promise.reject(`Ошибка: ${res.message}`)
+export function register({email, password}) {
+  const url = `${BASE_URL}/signup`;
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({email, password}),
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+      // Получить сообщение об ошибке с сервера
+      return res.json().then((res) => {
+        throw new Error(res.message);
+      });
+    });
 }
 
-export const register = ({ password, email }) => {
-return fetch(`${BASE_URL}/signup`, {
-  method: "POST",
-  headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ password, email }),
-})
-  .then((response) => {
-    return response.json();
+export function authorize({email, password}) {
+  const url = `${BASE_URL}/signin`;
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({email, password}),
   })
-  .catch((err) => console.log(err));
-};
+    .then(res => {
+      if (res.ok) return res.json();
+      // Получить сообщение об ошибке с сервера
+      return res.json().then((res) => {
+        throw new Error(res.message);
+      });
+    })
+    .then(res => {
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+      }
+      return res;
+    });
+}
 
-export const authorize = ({email, password}) => {
-return fetch(`${BASE_URL}/signin`, {
-  method: "POST",
-  headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ email, password }),
-})
-  .then(checkResponse)
-};
-
-export const checkToken = (token) => {
-return fetch(`${BASE_URL}/users/me`, {
-  method: "GET",
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  },
-})
-  .then((res) => res.json())
-  .then((data) => data)
-  .catch((err) => console.log(err));
-};
+export function checkToken(token) {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+      // Получить сообщение об ошибке с сервера
+      return res.json().then((res) => {
+        throw new Error(res.message);
+      });
+    });
+}
