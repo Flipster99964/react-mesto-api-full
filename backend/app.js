@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 const routes = require('./routes/routes');
 const cenralErrors = require('./middlewares/central-error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -19,11 +20,13 @@ async function main() {
     console.log(`App listening on port ${PORT}`);
   });
 }
+app.use(corsCheck);
 app.use(BodyParser.json());
 app.use(express.json());
-app.use('*', corsCheck);
 app.use(requestLogger); // подключаем логгер запросов
 app.use(routes);
+
+app.use(helmet());
 
 app.use(errorLogger); // подключаем логгер ошибок
 
