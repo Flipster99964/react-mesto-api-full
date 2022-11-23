@@ -4,8 +4,8 @@ class Api {
     this._headers = options.headers;
   }
   _setBearerToken(headers) {
-  if ('jwt' in localStorage) {
-      return { ...headers, authorization: `Bearer ${localStorage.getItem('jwt')}` }
+  if ('token' in localStorage) {
+      return { ...headers, authorization: `Bearer ${localStorage.getItem('token')}` }
     }
     return headers;
   };
