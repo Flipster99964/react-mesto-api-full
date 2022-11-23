@@ -1,6 +1,8 @@
 const allowedCors = [
   'https://flipster99964.students.nomoredomains.club',
   'http://flipster99964.students.nomoredomains.club',
+  'https://api.flipster99964.student.nomoredomains.club',
+  'http://api.flipster99964.student.nomoredomains.club',
   'http://localhost:3000',
 ];
 
