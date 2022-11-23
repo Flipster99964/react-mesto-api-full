@@ -1,9 +1,11 @@
 const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
 
+
 export function register({email, password}) {
   const url = `${BASE_URL}/signup`;
   return fetch(url, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
     },
@@ -22,6 +24,7 @@ export function authorize({email, password}) {
   const url = `${BASE_URL}/signin`;
   return fetch(url, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
     },
@@ -42,13 +45,13 @@ export function authorize({email, password}) {
     });
 }
 
-export function checkToken(token) {
+export function checkToken() {
   const url = `${BASE_URL}/users/me`;
   return fetch(url, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${token}`
     },
   })
     .then(res => {
