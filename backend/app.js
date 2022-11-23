@@ -5,6 +5,7 @@ const { errors } = require('celebrate');
 const routes = require('./routes/routes');
 const cenralErrors = require('./middlewares/central-error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { corsCheck } = require('./utils/utils');
 
 const app = express();
 const PORT = 3000;
@@ -18,6 +19,7 @@ async function main() {
     console.log(`App listening on port ${PORT}`);
   });
 }
+app.use(corsCheck);
 app.use(BodyParser.json());
 app.use(express.json());
 app.use(requestLogger); // подключаем логгер запросов
