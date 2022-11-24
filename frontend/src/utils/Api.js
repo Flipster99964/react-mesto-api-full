@@ -1,4 +1,3 @@
-console.log(`Bearer ${localStorage.getItem('token')}`)
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -72,7 +71,7 @@ class Api {
 }
 // API
 export const api = new Api({
-  baseUrl: 'https://api.flipster99964.student.nomoredomains.club',
+  baseUrl: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
   }

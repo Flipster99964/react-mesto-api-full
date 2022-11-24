@@ -1,4 +1,5 @@
-const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
+//const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
+const BASE_URL = 'http://localhost:3000';
 export function register({email, password}) {
   const url = `${BASE_URL}/signup`;
   return fetch(url, {
