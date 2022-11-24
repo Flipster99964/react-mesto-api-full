@@ -71,7 +71,7 @@ class Api {
 }
 // API
 export const api = new Api({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://api.flipster99964.student.nomoredomains.club',
   headers: {
     'Content-Type': 'application/json',
   }

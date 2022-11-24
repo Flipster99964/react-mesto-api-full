@@ -9,6 +9,9 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const allowedCors = [
   'https://flipster99964.students.nomoredomains.club',
+  'http://flipster99964.students.nomoredomains.club',
+  'https://api.flipster99964.student.nomoredomains.club',
+  'http://api.flipster99964.student.nomoredomains.club',
 ];
 const app = express();
 const PORT = 3000;
