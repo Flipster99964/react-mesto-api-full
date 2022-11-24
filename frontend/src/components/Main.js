@@ -5,7 +5,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 const Main = (props) => {
   const user = useContext(CurrentUserContext);
-
   return (
     <>
       <Header>

@@ -1,11 +1,10 @@
 const BASE_URL = 'https://api.flipster99964.student.nomoredomains.club';
-
 export function register({email, password}) {
   const url = `${BASE_URL}/signup`;
   return fetch(url, {
     method: 'POST',
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({email, password}),
@@ -24,7 +23,7 @@ export function authorize({email, password}) {
   return fetch(url, {
     method: 'POST',
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({email, password}),
@@ -36,25 +35,22 @@ export function authorize({email, password}) {
         throw new Error(res.message);
       });
     })
-    .then(res => {
-      if (res.token) {
-        localStorage.setItem('token', res.token);
-      }
-      return res;
-    });
 }
 
 export function checkToken(token) {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
-      "Accept": "application/json",
       Authorization: `Bearer ${token}`,
     },
   })
     .then(res => {
-      if (res.ok) return res.json();
+      console.log(res.status)
+      if (res.ok) {
+        return res.json();
+      }
       // Получить сообщение об ошибке с сервера
       return res.json().then((res) => {
         throw new Error(res.message);

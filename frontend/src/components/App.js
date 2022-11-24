@@ -34,32 +34,25 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      api
-        .getUserInfo()
-        .then((user) => setCurrentUser(user))
-        .catch((err) => console.log(err));
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn) {
-      Promise.all([api.getInitialCards()])
-        .then(([dataCards]) => {
-          setCards(dataCards);
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+          .then(([{ data: userInfo }, { cards }]) => {
+          console.log(userInfo, cards)
+          setCurrentUser(userInfo);
+          setCards(cards);
         })
-        .catch((err) => console.log(err));
+        .catch((error) => console.log(error));
     }
   }, [loggedIn]);
   function handleCardLike(card) {
-    const isLiked = card.likes.some(
-      (likeOnCard) => likeOnCard._id === currentUser._id
-    );
-
+    console.log(card)
+    const isLiked = card.likes ?  card.likes.some(
+      (likeOnCard) => likeOnCard === currentUser._id,
+    ): false;
     api
       .toggleCardLike(card._id, isLiked)
-      .then((newCard) => {
+      .then(({ cards }) => {
         setCards((state) =>
-          state.map((oldCard) => (oldCard._id === card._id ? newCard : oldCard))
+          state.map((oldCard) => (oldCard._id === card._id ? cards : oldCard))
         );
       })
       .catch((err) => console.log(err));
@@ -82,8 +75,9 @@ function App() {
   const handleAddPlaceSubmit = (newCard) => {
     api
       .addCard(newCard)
-      .then((res) => {
-        setCards([res, ...cards]);
+      .then(({ card }) => {
+        console.dir(card)
+        setCards([ card, ...cards]);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -113,13 +107,12 @@ function App() {
   const handleUpdateUser = (obj) => {
     api
       .editUserInfo(obj)
-      .then((res) => {
-        setCurrentUser(res);
+      .then(({ data }) => {
+        setCurrentUser( data );
         closeAllPopups();
       })
       .catch((err) => console.log(err));
   };
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -132,13 +125,13 @@ function App() {
         })
         .catch(console.error);
     }
-  }, [loggedIn]);
+  }, [history]);
 
   const handleUpdateAvatar = (avatarObj) => {
     api
       .editAvatar(avatarObj)
-      .then((res) => {
-        setCurrentUser(res);
+      .then(({ data }) => {
+        setCurrentUser( data );
         closeAllPopups();
       })
       .catch((err) => console.log(err));
