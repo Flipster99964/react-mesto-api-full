@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const ExistEmailError = require('../errors/exist-email-error');
-const BadAuthError = require('../errors/bad-auth-error');
 const BadRequestError = require('../errors/bad-request-error');
 const NotFoundError = require('../errors/not-found-error');
 const {
@@ -17,9 +16,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, SEKRET_KEY, { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch(() => {
-      next(new BadAuthError('Неправильные почта или пароль.'));
-    });
+    .catch(next);
 };
 
 module.exports.getUserById = (req, res, next) => {
