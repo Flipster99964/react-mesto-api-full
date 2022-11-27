@@ -13,8 +13,8 @@ const allowedCors = [
   'https://api.flipster99964.student.nomoredomains.club/users/me',
   'http://api.flipster99964.student.nomoredomains.club',
 ];
+const { PORT = 3000 } = process.env;
 const app = express();
-const PORT = 3000;
 function corsCheck(req, res, next) {
   const { origin } = req.headers;
   const { method } = req;
