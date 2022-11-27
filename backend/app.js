@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require('body-parser');
@@ -51,7 +52,6 @@ app.use(express.json());
 app.use(requestLogger); // подключаем логгер запросов
 app.use(helmet());
 app.use(corsCheck);
-require('dotenv').config();
 
 app.use(routes);
 
