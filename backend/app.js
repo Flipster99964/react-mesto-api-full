@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const BodyParser = require('body-parser');
@@ -14,7 +13,6 @@ const allowedCors = [
   'https://api.flipster99964.student.nomoredomains.club/users/me',
   'http://api.flipster99964.student.nomoredomains.club',
 ];
-console.dir(process.env.NODE_ENV); // production
 const { PORT = 3000 } = process.env;
 const app = express();
 function corsCheck(req, res, next) {
@@ -36,6 +34,7 @@ function corsCheck(req, res, next) {
   }
   return next();
 }
+
 async function main() {
   try {
     await mongoose.connect('mongodb://localhost:27017/mestodb');
@@ -52,6 +51,8 @@ app.use(express.json());
 app.use(requestLogger); // подключаем логгер запросов
 app.use(helmet());
 app.use(corsCheck);
+require('dotenv').config();
+
 app.use(routes);
 
 app.use(errorLogger); // подключаем логгер ошибок
