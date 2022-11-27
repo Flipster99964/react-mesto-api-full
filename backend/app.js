@@ -14,6 +14,7 @@ const allowedCors = [
   'https://api.flipster99964.student.nomoredomains.club/users/me',
   'http://api.flipster99964.student.nomoredomains.club',
 ];
+console.log(process.env.NODE_ENV); // production
 const { PORT = 3000 } = process.env;
 const app = express();
 function corsCheck(req, res, next) {
