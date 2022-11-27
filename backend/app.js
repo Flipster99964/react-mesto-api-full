@@ -51,7 +51,6 @@ app.use(express.json());
 app.use(requestLogger); // подключаем логгер запросов
 app.use(helmet());
 app.use(corsCheck);
-require('dotenv').config();
 
 app.use(routes);
 
